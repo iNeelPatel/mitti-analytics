@@ -4,7 +4,7 @@ export const getSensorData = async () => {
   const samples = new Parse.Query("Data");
 
   samples.limit(2000);
-  samples.equalTo("deviceId", "SLMTEST130220001");
+  samples.equalTo("deviceId", "SL-2021-03-015-P");
 
   try {
     let data = await samples.find();

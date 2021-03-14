@@ -8,38 +8,37 @@ export default class all extends Component {
     super(props);
     this.state = {
       data: [],
-      loader: true
+      loader: true,
     };
   }
 
   UNSAFE_componentWillMount = async () => {
     await action
       .getSensorData()
-      .then(sensorData => {
+      .then((sensorData) => {
         this.setState({ data: sensorData, loader: false });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     await console.log(this.state.loader);
   };
 
   render() {
     const sensorChartData = [];
-    this.state.data.map(async item =>
-      item.soilTemprature === -127 ||
-      item.airTemprature === null
+    this.state.data.map(async (item) =>
+      item.soilTemprature === -127 || item.airTemprature === null
         ? ""
         : sensorChartData.push({
             x: new Date(item.createdAt) + 19800,
-            y1: item.airTemprature,
-            y5: item.soilPh,
-            y3: item.soilMoisture,
-            y4: item.soilTemprature,
-            y2: item.airHumidity
+            y1: item.soilTemprature,
+            y5: item.soilMoisture,
+            y3: item.soilPh,
+            y4: item.airTemprature,
+            y2: item.airHumidity,
           })
     );
-   //  console.table(this.state.data);
-    
+    //  console.table(this.state.data);
+
     return this.state.loader ? (
       <h2>
         <Spin /> Loading......
@@ -51,8 +50,8 @@ export default class all extends Component {
             height={550}
             data={sensorChartData}
             titleMap={{
-              y1: "Air Temprature",
-              y2: "soilPh",
+              y1: "Temprature",
+              y2: "Moisture",
             }}
           />
         </Col>
